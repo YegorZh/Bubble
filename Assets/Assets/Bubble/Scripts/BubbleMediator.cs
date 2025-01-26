@@ -17,10 +17,8 @@ public class BubbleMediator : MonoBehaviour
       _health.onDeath -= HandleDeath;
     }
 
-    void HandleDeath(bool respawnAtCheckpoint)
+    void HandleDeath()
     {
       Destroy(gameObject);
-      if (!respawnAtCheckpoint) return;
-      
     } 
 }

@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 425281030627316324}
   m_Layer: 0
   m_Name: Bubble
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,7 +202,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody2D: {fileID: 3926919378219281194}
   _speedScale: 5
-  _maxSpeed: 9999
+  _maxSpeed: 20
+  CanMove: 1
 --- !u!50 &3926919378219281194
 Rigidbody2D:
   serializedVersion: 4

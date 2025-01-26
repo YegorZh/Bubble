@@ -11,11 +11,13 @@ public class DamageOnCollide : MonoBehaviour
     void OnEnable()
     {
         _colliderHandler.onCollisionEnter += HandleOnCollisionEnter;
+        _colliderHandler.onCollisionStay += HandleOnCollisionEnter;
     }
     
     void OnDisable()
     {
         _colliderHandler.onCollisionEnter -= HandleOnCollisionEnter;
+        _colliderHandler.onCollisionStay -= HandleOnCollisionEnter;
     }
 
     void HandleOnCollisionEnter(Collider2D obj)

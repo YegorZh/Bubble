@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3339364798456566345}
   - component: {fileID: -937256284893392929}
   - component: {fileID: 5573935944232870386}
+  - component: {fileID: 5419986881268838764}
   m_Layer: 0
   m_Name: VictorySoap
   m_TagString: Untagged
@@ -102,7 +103,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -146,10 +147,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.28125}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.75, y: 0.5625}
     newSize: {x: 0.75, y: 0.5625}
     adaptiveTilingThreshold: 0.5
@@ -171,3 +172,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86dffa545d84a4be5bcaca68e42b4240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5419986881268838764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4250006896902470811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccfe03a9eebde4e8f82921909907a455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colliderHandler: {fileID: 5573935944232870386}
+  _gameManager: {fileID: 0}
