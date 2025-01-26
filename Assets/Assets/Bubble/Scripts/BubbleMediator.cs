@@ -6,6 +6,7 @@ using UnityEngine;
 public class BubbleMediator : MonoBehaviour
 {
     [SerializeField] Health _health;
+    [SerializeField] GameObject _bubbleDeathPrefab;
 
     void OnEnable()
     {
@@ -19,6 +20,8 @@ public class BubbleMediator : MonoBehaviour
 
     void HandleDeath()
     {
+      var bubbleDeath = Instantiate(_bubbleDeathPrefab, transform);
+      bubbleDeath.transform.parent = null;
       Destroy(gameObject);
     } 
 }

@@ -150,4 +150,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colliderHandler: {fileID: 4042167994405970792}
   _damage: 1
-  _damageSpeedThreshold: 3
+  _damageSpeedThreshold: 6

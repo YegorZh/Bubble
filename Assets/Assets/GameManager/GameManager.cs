@@ -1,5 +1,6 @@
 using System;
 using Cinemachine;
+using DefaultNamespace;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     Transform _activeCheckpointTransform;
     [SerializeField] string _nextLevel;
     bool _hasLevelEnded;
+    TimeSpan _totalTime;
     DateTime _startTime;
 
     void OnEnable()
@@ -86,8 +88,8 @@ public class GameManager : MonoBehaviour
         _respawnText.SetActive(false);
 
         var endTime = DateTime.Now;
-        var totalTime = endTime - _startTime;
-        _winLevelUI.SetTimeText(totalTime);
+        _totalTime = endTime - _startTime;
+        _winLevelUI.SetTimeText(_totalTime);
     }
 
     public void RestartScene()
@@ -98,7 +100,9 @@ public class GameManager : MonoBehaviour
 
     public void LoadNextScene()
     {
+        
         _startingCheckpoint.ClearCheckpoints();
         SceneManager.LoadScene(_nextLevel);
+        TotalTimeMemory.TotalTime += _totalTime;
     }
 }

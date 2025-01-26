@@ -257,3 +257,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1315728109128639914}
+  _bubbleDeathPrefab: {fileID: 3866444486352809944, guid: 56a3a57ac9fc34d95a457deb49b4af12, type: 3}
