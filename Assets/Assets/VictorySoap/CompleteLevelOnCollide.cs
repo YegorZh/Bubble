@@ -12,7 +12,12 @@ public class CompleteLevelOnCollide : MonoBehaviour
     {
         _colliderHandler.onCollisionEnter += HandleCollisionEnter;
     }
-    
+
+    void Start()
+    {
+        if (_gameManager == null) _gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void OnDisable()
     {
         _colliderHandler.onCollisionEnter -= HandleCollisionEnter;

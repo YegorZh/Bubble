@@ -22,8 +22,8 @@ public class MoveToMouse : MonoBehaviour
         _cachedCamera ??= Camera.main;
         var targetPos = _cachedCamera.ScreenToWorldPoint(Input.mousePosition);
         var baseVelocity = targetPos - _cachedTransform.position;
-        var velocityX = Mathf.Min(Mathf.Abs(baseVelocity.x * _speedScale), _maxSpeed) * Mathf.Sign(baseVelocity.x);
-        var velocityY = Mathf.Min(Mathf.Abs(baseVelocity.y * _speedScale), _maxSpeed) * Mathf.Sign(baseVelocity.y);
+        var velocityX = Mathf.Min(Mathf.Abs(baseVelocity.x * _speedScale * Time.fixedDeltaTime), _maxSpeed) * Mathf.Sign(baseVelocity.x);
+        var velocityY = Mathf.Min(Mathf.Abs(baseVelocity.y * _speedScale * Time.fixedDeltaTime), _maxSpeed) * Mathf.Sign(baseVelocity.y);
         _rigidbody2D.velocity = new (velocityX, velocityY);
     }
 }

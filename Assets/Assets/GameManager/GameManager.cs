@@ -1,7 +1,9 @@
 using System;
 using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,15 +12,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera _cinemachineVirtualCamera;
     [SerializeField] LevelCompleteUILogic _winLevelUI;
     [SerializeField] GameObject _canvas;
+    [SerializeField] GameObject _respawnText;
     Health _bubble;
-    Transform _startingCheckpoint;
-    Transform _activeCheckpoint;
-    Scene _nextLevel;
+    [SerializeField] CheckpointLogic _startingCheckpoint;
+    Transform _activeCheckpointTransform;
+    [SerializeField] string _nextLevel;
     bool _hasLevelEnded;
+    DateTime _startTime;
 
     void OnEnable()
     {
-        _bubble = GameObject.FindWithTag("Player").GetComponent<Health>();
+        var player = GameObject.FindWithTag("Player"); 
+        if (player == null) return;
+        _bubble = player.GetComponent<Health>();
+        _bubble.onDeath += HandlePlayerDeath;
+    }
+
+    void HandlePlayerDeath()
+    {
+        if (_hasLevelEnded) return; 
+        _respawnText.SetActive(true);
     }
 
     void Update()
@@ -35,37 +48,57 @@ public class GameManager : MonoBehaviour
             var targetPos = _cachedCamera.ScreenToWorldPoint(Input.mousePosition);
             targetPos.z = 0;
             _bubble = Instantiate(_bubblePrefab, targetPos, new Quaternion());
+            _bubble.onDeath += HandlePlayerDeath;
             _cinemachineVirtualCamera.Follow = _bubble.transform;
+            _respawnText.SetActive(false);
         }
     }
 
-    public void SetActiveCheckpoint()
+    public void SetActiveCheckpointTransform(Transform activeCheckpointTransform)
     {
-        
+        _activeCheckpointTransform = activeCheckpointTransform;
     }
 
-    public void RespawnPlayerAtCheckpoint()
+    void Start()
     {
-        _bubble.ApplyDamage(1);
-        _bubble = Instantiate(_bubblePrefab, _activeCheckpoint);
+        _startTime = DateTime.Now;
+        _startingCheckpoint.BecomeActive();
+        SetActiveCheckpointTransform(_startingCheckpoint.transform);
+        RespawnPlayerAtCheckpoint(true);
+    }
+
+    public void RespawnPlayerAtCheckpoint(bool bruteForceLevelOneRespawn = false)
+    {
+        if (!bruteForceLevelOneRespawn && SceneManager.GetActiveScene().name == "Level1") return;
+        if(_bubble != null )_bubble.ApplyDamage(1);
+        _bubble = Instantiate(_bubblePrefab, _activeCheckpointTransform);
+        _bubble.transform.parent = null;
+        _bubble.onDeath += HandlePlayerDeath;
         _cinemachineVirtualCamera.Follow = _bubble.transform;
+        _respawnText.SetActive(false);
     }
 
     public void WinLevel()
     {
         _bubble.ApplyDamage(1);
-        var winLevelUi = Instantiate(_winLevelUI, _canvas.transform);
-        winLevelUi.Init(this);
+        _winLevelUI.gameObject.SetActive(true);
         _hasLevelEnded = true;
+        _respawnText.SetActive(false);
+
+        var endTime = DateTime.Now;
+        var totalTime = endTime - _startTime;
+        _winLevelUI.SetTimeText(totalTime);
     }
 
     public void RestartScene()
     {
+        _startingCheckpoint.ClearCheckpoints();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(_nextLevel.buildIndex);
+        _startingCheckpoint.ClearCheckpoints();
+        SceneManager.LoadScene(_nextLevel);
     }
 }

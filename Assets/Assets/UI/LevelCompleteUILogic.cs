@@ -1,19 +1,18 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class LevelCompleteUILogic : MonoBehaviour
 {
     [SerializeField] Button _nextLevelButton;
     [SerializeField] Button _restartLevelButton;
-    [HideInInspector] public GameManager GameManager;
+    [SerializeField] Text _timeText;
+    [SerializeField] GameManager _gameManager;
 
-    public void Init(GameManager gameManager)
+    public void SetTimeText(TimeSpan totalTime)
     {
-        GameManager = gameManager;
+        var text = $"Completion time: {totalTime.Minutes} : {totalTime.Seconds}";
+        _timeText.text = text;
     }
     
     void OnEnable()
@@ -21,13 +20,13 @@ public class LevelCompleteUILogic : MonoBehaviour
         var onNextLevelClick = new Button.ButtonClickedEvent();
         onNextLevelClick.AddListener(() =>
         {
-            GameManager.LoadNextScene();
+            _gameManager.LoadNextScene();
         });
         
         var onRestartClick = new Button.ButtonClickedEvent();
         onRestartClick.AddListener(() =>
         {
-            GameManager.RestartScene();
+            _gameManager.RestartScene();
         });
         
         _nextLevelButton.onClick = onNextLevelClick;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8575139842852385742}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,3 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bubblePrefab: {fileID: 8925203676383995881, guid: ef706a94c02d9403da11ddb2e1edf5e3, type: 3}
+  _cinemachineVirtualCamera: {fileID: 0}
+  _winLevelUI: {fileID: 0}
+  _canvas: {fileID: 0}
+  _nextLevel: 
